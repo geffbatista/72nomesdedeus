@@ -1,0 +1,246 @@
+$mobileMaxWidth: 768px;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+  font-size: 12px;
+  background: #333;
+  color: #fff;
+
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+header,
+footer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  margin: 0;
+  padding: 8px;
+
+  width: 100%;
+  background: #222;
+
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+  margin: 0;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+section {
+  position: relative;
+  left: 0;
+  top: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  overflow: hidden;
+  overflow-y: auto;
+
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+
+  scroll-snap-align: end;
+
+  @media only screen and (min-width: #{$mobileMaxWidth}) {
+    scroll-snap-type: y proximity;
+  }
+}
+
+article {
+  position: relative;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+
+  background: none;
+  border-bottom: 1px solid currentColor;
+
+  scroll-snap-align: center;
+}
+
+.Significa {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  display: block;
+  margin: 0;
+  padding: 0;
+
+  font-size: 12px;
+  white-space: nowrap;
+  text-align: center;
+  color: currentColor;
+}
+
+.Posicao {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #222;
+  border: none;
+
+  font-size: 8px;
+  line-height: 1.2em;
+
+  color: currentColor;
+}
+
+.NomeSvg {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  width: 50%;
+  height: auto;
+  color: currentColor;
+
+  .UseSvg {
+    x: 50%;
+    y: 50%;
+    transform: translate(-50%, -50%);
+    fill: currentColor;
+    stroke-width: 0px;
+    stroke: currentColor;
+  }
+}
+
+.Painel {
+  position: fixed;
+  left: 100%;
+  top: 0;
+  transform: translate(0, 0);
+  visibility: hidden;
+  z-index: 10;
+
+  display: block;
+  margin: 0;
+  padding: 16px;
+
+  width: 40%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background: #222;
+
+  will-change: transform, visibility;
+
+  box-shadow: 0 0 0 rgba($color: #000000, $alpha: 0);
+
+  transition: transform 0.35s ease-out, box-shadow 0.35s ease-out,
+    visibility 0s ease 0.5s;
+
+  &.Exibindo {
+    transform: translate(-100%, 0);
+    visibility: visible;
+    box-shadow: 0 0 16px rgba($color: #000000, $alpha: 0.6);
+
+    transition: transform 0.25s ease-in-out 0s, visibility 0s ease;
+  }
+
+  ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: block;
+      margin: 0;
+      padding: 0;
+
+      border-bottom: 1px solid #111;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      a {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+
+        margin: 0;
+        padding: 8px 0;
+        width: 100%;
+        height: auto;
+        min-height: 40px;
+      }
+    }
+  }
+}
+
+.Fundo {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  opacity: 0;
+
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  visibility: hidden;
+  background: rgba($color: #000000, $alpha: 0.6);
+  border: none;
+  backdrop-filter: blur(0px);
+  touch-action: none;
+
+  transition: backdrop-filter 0.35s ease, opacity 0.35s ease,
+    visibility 0s ease 0.35s;
+
+  &.Exibindo {
+    opacity: 1;
+    visibility: visible;
+    backdrop-filter: blur(2px);
+
+    transition: backdrop-filter 0.35s ease, opacity 0.35s ease,
+      visibility 0s ease 0s;
+  }
+}
