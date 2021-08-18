@@ -83,17 +83,17 @@ const lideComOScroll = (window: Window & typeof globalThis) => {
 export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
   const [mostrarNavPorPosicao, alterarNavPorPosicao] = useState(false);
 
-  const refDaSessao: LegacyRef<HTMLElement> | null = useRef(null);
+  const sessionRef: LegacyRef<HTMLElement> | null = useRef(null);
 
   useEffect(() => {
-    refDaSessao?.current?.addEventListener("scroll", () =>
+    sessionRef?.current?.addEventListener("scroll", () =>
       lideComOScroll(window)
     );
 
-    return refDaSessao?.current?.removeEventListener("scroll", () =>
+    return sessionRef?.current?.removeEventListener("scroll", () =>
       lideComOScroll(window)
     );
-  }, [refDaSessao]);
+  }, [sessionRef]);
 
   return (
     <div>
@@ -104,7 +104,7 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
       </Head>
 
       <main>
-        <section ref={refDaSessao}>
+        <section ref={sessionRef}>
           <header>
             <h1>72 nomes de deus</h1>
           </header>
