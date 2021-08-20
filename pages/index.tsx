@@ -157,7 +157,7 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
 // This function gets called at build time
 export async function getStaticProps() {
   // Call an external API endpoint to get posts
-  const API_URL = "http://localhost:3000/api/72-nomes-de-deus";
+  const API_URL = "/api/72-nomes-de-deus";
 
   const res = await fetch(API_URL);
   const SetentaEDoisNomesDeDeus = await res.json();
