@@ -1,0 +1,30 @@
+.Fundo {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  opacity: 0;
+
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  visibility: hidden;
+  background: rgba($color: #000000, $alpha: 0.6);
+  border: none;
+  backdrop-filter: blur(0px);
+  touch-action: none;
+
+  transition: backdrop-filter 0.35s ease, opacity 0.35s ease,
+    visibility 0s ease 0.35s;
+
+  &.Exibindo {
+    opacity: 1;
+    visibility: visible;
+    backdrop-filter: blur(2px);
+
+    transition: backdrop-filter 0.35s ease, opacity 0.35s ease,
+      visibility 0s ease 0s;
+  }
+}

@@ -1,0 +1,25 @@
+.NomeSvg {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  width: 50%;
+  height: auto;
+  color: currentColor;
+
+  .UseSvg {
+    x: 50%;
+    y: 50%;
+    transform: translate(-50%, -50%);
+    fill: currentColor;
+    stroke-width: 0px;
+    stroke: currentColor;
+  }
+
+  @media (min-width: $desktopMinWidth) {
+    width: 50%;
+  }
+}

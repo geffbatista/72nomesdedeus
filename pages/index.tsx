@@ -110,44 +110,49 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
             <h1>72 nomes de deus</h1>
           </header>
 
-          {SetentaEDoisNomesDeDeus.map((nome, posicao) => (
-            <article key={nome.svg} id={`nome${posicao + 1}`}>
-              <svg
-                className="NomeSvg"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox={nome.viewBox}
-                width={nome.width}
-                height={nome.height}
-              >
-                <use className="UseSvg" xlinkHref={`/nomes/${nome.svg}#nome`} />
-              </svg>
+          <div className="NamesWrapper">
+            {SetentaEDoisNomesDeDeus.map((nome, posicao) => (
+              <article key={nome.svg} id={`nome${posicao + 1}`}>
+                <svg
+                  className="NomeSvg"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox={nome.viewBox}
+                  width={nome.width}
+                  height={nome.height}
+                >
+                  <use
+                    className="UseSvg"
+                    xlinkHref={`/nomes/${nome.svg}#nome`}
+                  />
+                </svg>
 
-              <strong className="Significa">{nome.means}</strong>
+                <strong className="Significa">{nome.means}</strong>
 
-              <button
-                type="button"
-                className="Posicao"
-                onClick={(evento) =>
-                  lideComClickNaPosicao(
-                    posicao + 1,
-                    alterarNavPorPosicao,
-                    evento
-                  )
-                }
-              >
-                {posicao + 1}
-              </button>
-            </article>
-          ))}
+                <button
+                  type="button"
+                  className="Posicao"
+                  onClick={(evento) =>
+                    lideComClickNaPosicao(
+                      posicao + 1,
+                      alterarNavPorPosicao,
+                      evento
+                    )
+                  }
+                >
+                  {posicao + 1}
+                </button>
+              </article>
+            ))}
+          </div>
         </section>
 
-        <aside>
-          <NavegacaoPorPosicao
-            SetentaEDoisNomesDeDeus={SetentaEDoisNomesDeDeus}
-            mostrarPainel={alterarNavPorPosicao}
-            exibindo={mostrarNavPorPosicao}
-          />
-        </aside>
+        <NavegacaoPorPosicao
+          SetentaEDoisNomesDeDeus={SetentaEDoisNomesDeDeus}
+          mostrarPainel={alterarNavPorPosicao}
+          exibindo={mostrarNavPorPosicao}
+        />
+
+        <aside></aside>
       </main>
 
       <footer>Feito para compartilhar</footer>

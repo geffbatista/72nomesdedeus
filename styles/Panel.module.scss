@@ -1,0 +1,65 @@
+.Painel {
+  position: fixed;
+  left: 100%;
+  top: 0;
+  transform: translate(0, 0);
+  visibility: hidden;
+  z-index: 10;
+
+  display: block;
+  margin: 0;
+  padding: 16px;
+
+  width: 40%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background: #222;
+
+  will-change: transform, visibility;
+
+  box-shadow: 0 0 0 rgba($color: #000000, $alpha: 0);
+
+  transition: transform 0.35s ease-out, box-shadow 0.35s ease-out,
+    visibility 0s ease 0.5s;
+
+  &.Exibindo {
+    transform: translate(-100%, 0);
+    visibility: visible;
+    box-shadow: 0 0 16px rgba($color: #000000, $alpha: 0.6);
+
+    transition: transform 0.25s ease-in-out 0s, visibility 0s ease;
+  }
+
+  ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: block;
+      margin: 0;
+      padding: 0;
+
+      border-bottom: 1px solid #111;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      a {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+
+        margin: 0;
+        padding: 8px 0;
+        width: 100%;
+        height: auto;
+        min-height: 40px;
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.Posicao {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #222;
+  border: none;
+
+  font-size: 8px;
+  line-height: 1.2em;
+
+  color: currentColor;
+  cursor: pointer;
+
+  @media (min-width: $desktopMinWidth) {
+    display: none;
+  }
+}
