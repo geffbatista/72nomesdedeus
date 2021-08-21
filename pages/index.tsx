@@ -11,6 +11,7 @@ import React, {
   useState,
 } from "react";
 import { NomesDeDeusType } from "../types";
+import { SetentaEDoisNomes } from "./api/72-nomes-de-deus/data";
 
 interface HomePageProps {
   SetentaEDoisNomesDeDeus: NomesDeDeusType;
@@ -156,14 +157,8 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
 
 // This function gets called at build time
 export async function getStaticProps() {
-  // Call an external API endpoint to get posts
-  const API_URL = "/api/72-nomes-de-deus";
+  const SetentaEDoisNomesDeDeus = SetentaEDoisNomes;
 
-  const res = await fetch(API_URL);
-  const SetentaEDoisNomesDeDeus = await res.json();
-
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
   return {
     props: { SetentaEDoisNomesDeDeus },
   };
