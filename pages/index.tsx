@@ -10,8 +10,9 @@ import React, {
   useRef,
   useState,
 } from "react";
+import HeadProperties from "../Components/Head";
 import { NomesDeDeusType } from "../types";
-import { SetentaEDoisNomes } from "./api/72-nomes-de-deus/data";
+import os72omesdedeus from "./api/72-nomes-de-deus";
 
 interface HomePageProps {
   SetentaEDoisNomesDeDeus: NomesDeDeusType;
@@ -97,11 +98,12 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
   }, [sessionRef]);
 
   return (
-    <div>
+    <>
       <Head>
         <title>72 nomes de deus</title>
         <meta name="description" content="72 nomes de deus" />
-        <link rel="icon" href="/favicon.ico" />
+
+        <HeadProperties />
       </Head>
 
       <main>
@@ -122,7 +124,7 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
                 >
                   <use
                     className="UseSvg"
-                    xlinkHref={`/nomes/${nome.svg}#nome`}
+                    xlinkHref={`images/nomes/${nome.svg}#nome`}
                   />
                 </svg>
 
@@ -144,6 +146,8 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
               </article>
             ))}
           </div>
+
+          <footer>Feito para compartilhar</footer>
         </section>
 
         <NavegacaoPorPosicao
@@ -154,15 +158,13 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
 
         <aside></aside>
       </main>
-
-      <footer>Feito para compartilhar</footer>
-    </div>
+    </>
   );
 }
 
 // This function gets called at build time
 export async function getStaticProps() {
-  const SetentaEDoisNomesDeDeus = SetentaEDoisNomes;
+  const SetentaEDoisNomesDeDeus = os72omesdedeus;
 
   return {
     props: { SetentaEDoisNomesDeDeus },

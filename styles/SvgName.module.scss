@@ -6,7 +6,7 @@
   align-items: center;
   text-align: center;
 
-  width: 50%;
+  width: 33%;
   height: auto;
   color: currentColor;
 
@@ -20,6 +20,6 @@
   }
 
   @media (min-width: $desktopMinWidth) {
-    width: 50%;
+    width: 40%;
   }
 }
