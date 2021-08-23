@@ -1,13 +1,27 @@
 @import "reset";
 
+//-----------------------------------------
+
 $desktopMinWidth: 992px;
 
 $background: #333;
 $color: #fff;
 
-@import "header.module.scss";
-@import "footer.module.scss";
+//-----------------------------------------
+
 @import "dashed-highlight.scss";
+
+//-----------------------------------------
+
+#__next {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+//-----------------------------------------
 
 html,
 body {
@@ -49,14 +63,6 @@ h1 {
   font-size: 12px;
 }
 
-#__next {
-  position: relative;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
 main {
   position: relative;
   display: block;
@@ -68,26 +74,14 @@ main {
 
 @import "section.module.scss";
 @import "article.module.scss";
+@import "header.module.scss";
+@import "footer.module.scss";
+
+//-----------------------------------------
+
 @import "NavigateByPosition.module.scss";
 @import "Means.module.scss";
-
-.NamesWrapper {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-
-  width: 100%;
-  height: calc(100% - 40px);
-
-  @media (min-width: $desktopMinWidth) {
-    align-items: stretch;
-
-    padding: 0 0 16px;
-    height: calc(100% - 40px - 40px);
-  }
-}
-
+@import "NamesWrapper.scss";
 @import "SvgName.module.scss";
 @import "Panel.module.scss";
 @import "Overlay.module.scss";
