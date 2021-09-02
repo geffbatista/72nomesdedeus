@@ -1,0 +1,44 @@
+main {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  &.Reverse {
+    flex-direction: row-reverse;
+  }
+
+  &.HorizontalOrientation {
+    .NamesWrapper {
+      flex-wrap: nowrap;
+    }
+
+    header {
+      overflow: hidden;
+
+      h1 {
+        position: fixed;
+        right: 0;
+
+        margin: 0;
+        padding: 8px 32px 8px 8px;
+        background: #222;
+      }
+    }
+
+    section {
+      overflow-y: auto;
+      overflow-x: auto;
+      scroll-snap-type: both mandatory;
+
+      background: #222;
+    }
+
+    article {
+      flex: 0 0 100%;
+      background: #333;
+    }
+  }
+}

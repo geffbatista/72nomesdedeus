@@ -1,5 +1,4 @@
-import classnames from "classnames";
-import { delay } from "lodash";
+import { debounce } from "lodash";
 import Head from "next/head";
 import React, {
   Dispatch,
@@ -11,89 +10,43 @@ import React, {
   useState,
 } from "react";
 import HeadProperties from "../Components/Head";
+import NavigationByPosition from "../Components/NavigationByPosition";
 import { NomesDeDeusType } from "../types";
-import os72omesdedeus from "./api/72-nomes-de-deus";
+import { default as os72omesdedeus } from "./api/72-nomes-de-deus";
 
 interface HomePageProps {
   SetentaEDoisNomesDeDeus: NomesDeDeusType;
 }
 
-interface NavegacaoPorPosicaoProps {
-  SetentaEDoisNomesDeDeus: NomesDeDeusType;
-  mostrarPainel: Dispatch<SetStateAction<boolean>>;
-  exibindo?: boolean;
-}
-
-const lideComClickNaPosicao = (
-  posicao: number,
-  alterarNavPorPosicao: Dispatch<SetStateAction<boolean>>,
+const openNavigationPanel = (
+  position: number,
+  setShowPanel: Dispatch<SetStateAction<boolean>>,
   evento: SyntheticEvent
 ) => {
   evento.preventDefault();
   evento.stopPropagation();
 
-  alterarNavPorPosicao(true);
+  setShowPanel(true);
 };
 
-const NavegacaoPorPosicao = ({
-  SetentaEDoisNomesDeDeus,
-  mostrarPainel,
-  exibindo,
-}: NavegacaoPorPosicaoProps) => {
-  const classesDoPainel = classnames("Painel", {
-    Exibindo: exibindo,
-  });
-
-  const classesDoFundo = classnames("Fundo", {
-    Exibindo: exibindo,
-  });
-
-  return (
-    <>
-      <nav className={classesDoPainel}>
-        <ul>
-          {SetentaEDoisNomesDeDeus.map((nome, posicao) => (
-            <li key={nome.label}>
-              <a
-                href={`#nome${posicao + 1}`}
-                title={nome.label}
-                onClick={() => mostrarPainel(false)}
-              >
-                Nome {posicao + 1}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <button
-        className={classesDoFundo}
-        title="Fechar"
-        onClick={() => mostrarPainel(false)}
-      />
-    </>
-  );
-};
-
-const lideComOScroll = (window: Window & typeof globalThis) => {
-  if (window) {
-    delay(() => {
-      window.location.hash = "";
-    }, 1200);
+const onScrollHandler = debounce(() => {
+  if (window && window !== undefined) {
+    return window.history.pushState({}, "title", window.location.pathname);
   }
-};
+}, 1.2);
 
 export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
-  const [mostrarNavPorPosicao, alterarNavPorPosicao] = useState(false);
+  const [showingNavByPosition, setShowingNavByPosition] = useState(false);
 
   const sessionRef: LegacyRef<HTMLElement> | null = useRef(null);
 
   useEffect(() => {
-    sessionRef?.current?.addEventListener("scroll", () =>
-      lideComOScroll(window)
-    );
+    console.log("sessionRef?.current: ", sessionRef?.current);
+
+    sessionRef?.current?.addEventListener("scroll", () => onScrollHandler());
 
     return sessionRef?.current?.removeEventListener("scroll", () =>
-      lideComOScroll(window)
+      onScrollHandler()
     );
   }, [sessionRef]);
 
@@ -133,11 +86,11 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
                 <button
                   type="button"
                   className="Posicao"
-                  onClick={(evento) =>
-                    lideComClickNaPosicao(
+                  onClick={(event) =>
+                    openNavigationPanel(
                       posicao + 1,
-                      alterarNavPorPosicao,
-                      evento
+                      setShowingNavByPosition,
+                      event
                     )
                   }
                 >
@@ -150,10 +103,10 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
           <footer>Feito para compartilhar</footer>
         </section>
 
-        <NavegacaoPorPosicao
+        <NavigationByPosition
           SetentaEDoisNomesDeDeus={SetentaEDoisNomesDeDeus}
-          mostrarPainel={alterarNavPorPosicao}
-          exibindo={mostrarNavPorPosicao}
+          setShowPanel={setShowingNavByPosition}
+          showing={showingNavByPosition}
         />
 
         <aside></aside>

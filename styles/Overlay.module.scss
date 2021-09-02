@@ -1,8 +1,8 @@
-.Fundo {
+.Overlay {
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 5;
+  z-index: 102;
   opacity: 0;
 
   display: block;
@@ -19,7 +19,7 @@
   transition: backdrop-filter 0.35s ease, opacity 0.35s ease,
     visibility 0s ease 0.35s;
 
-  &.Exibindo {
+  &.Showing {
     opacity: 1;
     visibility: visible;
     backdrop-filter: blur(2px);

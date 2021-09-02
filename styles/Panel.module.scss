@@ -1,16 +1,16 @@
-.Painel {
+.Panel {
   position: fixed;
   left: 100%;
   top: 0;
   transform: translate(0, 0);
   visibility: hidden;
-  z-index: 10;
+  z-index: 103;
 
   display: block;
   margin: 0;
   padding: 16px;
 
-  width: 40%;
+  width: 50%;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
@@ -24,7 +24,7 @@
   transition: transform 0.35s ease-out, box-shadow 0.35s ease-out,
     visibility 0s ease 0.5s;
 
-  &.Exibindo {
+  &.Showing {
     transform: translate(-100%, 0);
     visibility: visible;
     box-shadow: 0 0 16px rgba($color: #000000, $alpha: 0.6);
@@ -42,8 +42,6 @@
       margin: 0;
       padding: 0;
 
-      border-bottom: 1px solid #111;
-
       &:first-child {
         margin-top: 0;
       }
@@ -59,6 +57,19 @@
         width: 100%;
         height: auto;
         min-height: 40px;
+
+        em {
+        }
+
+        h2 {
+          display: inline-block;
+          margin-left: 8px;
+          line-height: 1.6em;
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
     }
   }
