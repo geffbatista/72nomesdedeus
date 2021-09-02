@@ -41,8 +41,6 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
   const sessionRef: LegacyRef<HTMLElement> | null = useRef(null);
 
   useEffect(() => {
-    console.log("sessionRef?.current: ", sessionRef?.current);
-
     sessionRef?.current?.addEventListener("scroll", () => onScrollHandler());
 
     return sessionRef?.current?.removeEventListener("scroll", () =>

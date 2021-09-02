@@ -1,17 +1,14 @@
-import type { AppProps } from "next/app";
+import { AppProps } from "next/dist/next-server/lib/router/router";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import * as gtag from "../lib/gtag";
 import "../styles/globals.scss";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
-
   useEffect(() => {
     const handleRouteChange = (url: string) => {
-      /* eslint-disable-next-line */
-      window?.gtag("config", process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
-        page_path: url,
-      });
+      gtag.pageview({ url });
     };
     router.events.on("routeChangeComplete", handleRouteChange);
     return () => {
@@ -20,5 +17,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return <Component {...pageProps} />;
-}
-export default MyApp;
+};
+
+export default App;
