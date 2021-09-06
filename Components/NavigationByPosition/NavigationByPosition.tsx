@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { event } from "../../lib/gtag";
 import NavigationMenu from "../NavigationMenu";
 import { NavigationByPositionProps } from "./types";
 
@@ -15,6 +16,16 @@ const NavigationByPosition = ({
     Showing: showing,
   });
 
+  const handleCloseClick = () => {
+    event({
+      category: "NavigationByPosition",
+      action: "click-to-close",
+      label: "close-menu",
+    });
+
+    return setShowPanel(false);
+  };
+
   return (
     <>
       <NavigationMenu
@@ -25,7 +36,7 @@ const NavigationByPosition = ({
       <button
         className={overlayClassNames}
         title="Fechar"
-        onClick={() => setShowPanel(false)}
+        onClick={handleCloseClick}
       />
     </>
   );

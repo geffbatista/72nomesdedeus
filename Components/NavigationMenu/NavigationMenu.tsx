@@ -1,4 +1,5 @@
-import { useCallback } from "react";
+import { SyntheticEvent, useCallback } from "react";
+import { event } from "../../lib/gtag";
 import { NomesDeDeusType } from "../../types";
 
 interface NavigationMenuProps {
@@ -12,13 +13,20 @@ const NavigationMenu = ({
   onClick,
   SetentaEDoisNomesDeDeus,
 }: NavigationMenuProps) => {
-  const onClickHandler = useCallback(() => {
-    if (!onClick) {
-      return null;
-    }
+  const onClickHandler = useCallback(
+    (ev: SyntheticEvent) => {
+      event({
+        category: "NavigationByPosition",
+        action: "click-to-navigate",
+        label: ev?.currentTarget?.textContent || undefined,
+      });
 
-    onClick();
-  }, [onClick]);
+      if (onClick) {
+        return onClick();
+      }
+    },
+    [onClick]
+  );
 
   return (
     <nav className={className}>
