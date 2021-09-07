@@ -52,7 +52,6 @@ export default function Home({ SetentaEDoisNomesDeDeus }: HomePageProps) {
     <>
       <Head>
         <title>72 nomes de deus</title>
-        <meta name="description" content="72 nomes de deus" />
 
         <HeadProperties />
       </Head>
