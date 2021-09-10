@@ -1,17 +1,17 @@
 import { SyntheticEvent, useCallback } from "react";
 import { event } from "../../lib/gtag";
-import { NomesDeDeusType } from "../../types";
+import { NamesOfGodType } from "../../types";
 
 interface NavigationMenuProps {
   className?: string;
   onClick?: () => void;
-  SetentaEDoisNomesDeDeus: NomesDeDeusType;
+  SeventyTwoNames: NamesOfGodType;
 }
 
 const NavigationMenu = ({
   className,
   onClick,
-  SetentaEDoisNomesDeDeus,
+  SeventyTwoNames,
 }: NavigationMenuProps) => {
   const onClickHandler = useCallback(
     (ev: SyntheticEvent) => {
@@ -28,10 +28,14 @@ const NavigationMenu = ({
     [onClick]
   );
 
+  if (!SeventyTwoNames) {
+    return null;
+  }
+
   return (
     <nav className={className}>
       <ul>
-        {SetentaEDoisNomesDeDeus.map((nome, posicao) => (
+        {SeventyTwoNames.map((nome, posicao) => (
           <li key={nome.label}>
             <a
               href={`#nome${posicao + 1}`}

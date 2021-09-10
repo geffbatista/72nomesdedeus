@@ -52,10 +52,6 @@ const MASK_ICON_COLOR = "#5bbad5";
 const Head = () => {
   return (
     <>
-      <meta
-        name="viewport"
-        content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
-      />
       <link rel="icon" href={FAV_ICON} />
       <link rel="icon" type="image/png" sizes="32x32" href={ICON_32} />
       <link rel="icon" type="image/png" sizes="192x192" href={ICON_192} />

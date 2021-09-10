@@ -4,7 +4,7 @@ import NavigationMenu from "../NavigationMenu";
 import { NavigationByPositionProps } from "./types";
 
 const NavigationByPosition = ({
-  SetentaEDoisNomesDeDeus,
+  SeventyTwoNames,
   setShowPanel,
   showing,
 }: NavigationByPositionProps) => {
@@ -30,7 +30,7 @@ const NavigationByPosition = ({
     <>
       <NavigationMenu
         className={panelClassNames}
-        SetentaEDoisNomesDeDeus={SetentaEDoisNomesDeDeus}
+        SeventyTwoNames={SeventyTwoNames}
         onClick={() => setShowPanel(false)}
       />
       <button

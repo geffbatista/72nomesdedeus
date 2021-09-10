@@ -1,4 +1,4 @@
-export type NomeDeDeusType = {
+export type NameOfGodType = {
   svg: string;
   label: string;
   means: string;
@@ -7,4 +7,4 @@ export type NomeDeDeusType = {
   height: string | number;
 };
 
-export type NomesDeDeusType = NomeDeDeusType[];
+export type NamesOfGodType = NameOfGodType[];

@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
-import { NomesDeDeusType } from "../../types";
+import { NamesOfGodType } from "../../types";
 
 export interface NavigationByPositionProps {
-  SetentaEDoisNomesDeDeus: NomesDeDeusType;
+  SeventyTwoNames: NamesOfGodType;
   setShowPanel: Dispatch<SetStateAction<boolean>>;
   showing?: boolean;
 }

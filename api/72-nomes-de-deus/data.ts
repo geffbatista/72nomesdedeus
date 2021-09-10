@@ -1,6 +1,6 @@
-import { NomesDeDeusType } from "../../../types";
+import { NamesOfGodType } from "../../types";
 
-const SetentaEDoisNomes: NomesDeDeusType = [
+const SeventyTwoNamesOfGod: NamesOfGodType = [
   {
     svg: "72-1.svg",
     label: "nome 1",
@@ -579,4 +579,4 @@ const SetentaEDoisNomes: NomesDeDeusType = [
   },
 ];
 
-export { SetentaEDoisNomes };
+export default SeventyTwoNamesOfGod;

@@ -1,12 +1,27 @@
-import Document, { Head, Html, Main, NextScript } from "next/document";
+import Document, {
+  DocumentContext,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from "next/document";
 // const googleAnalyticsKey = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
 import { GA_TRACKING_ID } from "../lib/gtag";
 
-export default class MyDocument extends Document {
+class MyDocument extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
+    const initialProps = await Document.getInitialProps(ctx);
+
+    return initialProps;
+  }
+
   render() {
     return (
       <Html>
-        <Head>
+        <Head />
+        <body>
+          <Main />
+          <NextScript />
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <script
             async
@@ -24,12 +39,10 @@ export default class MyDocument extends Document {
           `,
             }}
           />
-        </Head>
-        <body>
-          <Main />
-          <NextScript />
         </body>
       </Html>
     );
   }
 }
+
+export default MyDocument;
