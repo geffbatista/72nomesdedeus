@@ -16,22 +16,20 @@ const Home = ({ SeventyTwoNames }: HomePageProps) => {
 
   const sessionRef: LegacyRef<HTMLElement> | null = useRef(null);
 
-  const onScrollHandler = delay(
-    () => clearUrl(window),
-    1400,
-    "-> URL Cleared!"
-  );
-
   useEffect(() => {
     if (window) {
-      sessionRef?.current?.addEventListener("scroll", () => onScrollHandler);
+      const onScrollHandler = (window: any) =>
+        delay(() => clearUrl(window), 1400, "-> URL Cleared!");
 
-      return sessionRef?.current?.removeEventListener(
-        "scroll",
-        () => onScrollHandler
+      sessionRef?.current?.addEventListener("scroll", () =>
+        onScrollHandler(window)
+      );
+
+      return sessionRef?.current?.removeEventListener("scroll", () =>
+        onScrollHandler(window)
       );
     }
-  }, [sessionRef, onScrollHandler]);
+  }, [sessionRef]);
 
   if (!SeventyTwoNames) {
     return null;

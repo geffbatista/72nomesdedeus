@@ -1,3 +1,4 @@
+// const googleAnalyticsKey = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
 import Document, {
   DocumentContext,
   Head,
@@ -5,7 +6,6 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
-// const googleAnalyticsKey = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
 import { GA_TRACKING_ID } from "../lib/gtag";
 
 class MyDocument extends Document {
@@ -13,6 +13,20 @@ class MyDocument extends Document {
     const initialProps = await Document.getInitialProps(ctx);
 
     return initialProps;
+  }
+
+  componentDidMount() {
+    const isBlackThemeActive = true;
+    // const {themeClassname} = this.props
+
+    this.setHtmlThemeClassnames(
+      !isBlackThemeActive ? "LightTheme" : "DarkTheme"
+    );
+  }
+
+  setHtmlThemeClassnames(className: string) {
+    document.body.className = "";
+    document.body.classList.add(className);
   }
 
   render() {
