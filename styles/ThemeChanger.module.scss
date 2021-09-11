@@ -1,7 +1,7 @@
-.PositionChanger {
+.ThemeChanger {
   position: absolute;
   right: 16px;
-  top: 64px;
+  top: 128px;
 
   display: flex;
   flex-flow: row nowrap;
@@ -16,12 +16,16 @@
   // background: #222;
   border: none;
 
-  font-size: 10px;
+  font-size: 8px;
   line-height: 1.2em;
-  font-weight: 700;
 
   color: currentColor;
   cursor: pointer;
+
+  .Icon {
+    width: 24px;
+    height: 24px;
+  }
 
   transition: all 0.35s ease-in-out 0.35s;
 

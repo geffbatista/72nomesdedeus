@@ -27,20 +27,20 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  // font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  //   Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
+  font-family: "Glory", sans-serif;
   font-size: 12px;
-  background: $background;
-  color: $color;
 
   width: 100%;
   height: 100%;
+}
 
+body {
   overflow-x: hidden;
   scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
-
   user-select: none;
 
   @media (min-width: $desktopMinWidth) {
@@ -72,6 +72,7 @@ h1 {
 //-----------------------------------------
 
 @import "NavigateByPosition.module.scss";
+@import "ThemeChanger.module.scss";
 @import "Means.module.scss";
 @import "NamesWrapper.scss";
 @import "SvgName.module.scss";

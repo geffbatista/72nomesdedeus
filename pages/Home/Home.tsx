@@ -1,4 +1,5 @@
 import { delay } from "lodash";
+import { useDarkMode } from "next-dark-mode";
 import Head from "next/head";
 import { LegacyRef, useEffect, useRef, useState } from "react";
 import HeadProperties from "../../Components/Head";
@@ -31,6 +32,10 @@ const Home = ({ SeventyTwoNames }: HomePageProps) => {
     }
   }, [sessionRef]);
 
+  const {
+    darkModeActive, // boolean - whether the dark mode is active or not
+  } = useDarkMode();
+
   if (!SeventyTwoNames) {
     return null;
   }
@@ -48,7 +53,7 @@ const Home = ({ SeventyTwoNames }: HomePageProps) => {
         <HeadProperties />
       </Head>
 
-      <main>
+      <main className={!darkModeActive ? "LightTheme" : "DarkTheme"}>
         <section ref={sessionRef}>
           <header>
             <h1>72 nomes de deus</h1>

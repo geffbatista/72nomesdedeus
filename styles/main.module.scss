@@ -41,4 +41,63 @@ main {
       background: #333;
     }
   }
+
+  &.LightTheme {
+    background: $color;
+    color: $background;
+
+    header,
+    footer {
+      background: #eee;
+    }
+
+    article {
+      border-bottom: 1px solid currentColor;
+
+      @media (min-width: $desktopMinWidth) {
+        border-bottom: none;
+      }
+    }
+
+    .Panel {
+      background: #fff;
+      color: #333;
+    }
+
+    .PositionChanger,
+    .ThemeChanger {
+      background: #eee;
+      color: #333;
+    }
+  }
+
+  &.DarkTheme {
+    background: $background;
+    color: $color;
+
+    header {
+      background: #222;
+    }
+
+    article {
+      border-bottom: 1px solid currentColor;
+
+      @media (min-width: $desktopMinWidth) {
+        border-bottom: none;
+      }
+    }
+
+    .Panel {
+      background: #222;
+      color: #fff;
+    }
+
+    .PositionChanger,
+    .ThemeChanger {
+      background: #222;
+      color: #fff;
+    }
+  }
+
+  transition: background 1s ease-out, color 0.35s ease-in-out;
 }

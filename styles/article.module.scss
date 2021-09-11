@@ -10,11 +10,10 @@ article {
   padding: 0;
   width: 100%;
   height: 100vh;
-
   background: none;
-  border-bottom: 1px solid currentColor;
-
   scroll-snap-align: center;
+
+  transition: border-bottom 0.35s ease-in-out 0.35s;
 
   @media (min-width: $desktopMinWidth) {
     width: calc(100% / 8);
