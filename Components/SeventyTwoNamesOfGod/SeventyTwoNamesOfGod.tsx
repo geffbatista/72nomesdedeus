@@ -1,6 +1,8 @@
+import classnames from "classnames";
 import { useDarkMode } from "next-dark-mode";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, SyntheticEvent, useState } from "react";
 import { MdInvertColors } from "react-icons/md";
+import { useDoubleTap } from "use-double-tap";
 import { NamesOfGodType } from "../../types";
 import openNavigationByPosition from "./openNavigationByPosition";
 
@@ -13,6 +15,8 @@ const SeventyTwoNamesOfGod = ({
   SeventyTwoNames,
   setShowingNavByPosition,
 }: SeventyTwoNamesOfGodProps) => {
+  const [isZoomed, setZoomed] = useState(false);
+
   const {
     darkModeActive, // boolean - whether the dark mode is active or not
     switchToDarkMode, // function - toggles the dark mode on
@@ -27,12 +31,27 @@ const SeventyTwoNamesOfGod = ({
     }
   };
 
+  const doubleClickHandler = (ev: SyntheticEvent) => {
+    if (isZoomed) {
+      setZoomed(false);
+    } else {
+      setZoomed(true);
+    }
+
+    ev.preventDefault();
+    ev.stopPropagation();
+  };
+
+  const bind = useDoubleTap((ev) => doubleClickHandler(ev));
+
   return (
     <div className="NamesWrapper">
       {SeventyTwoNames?.map((nome, posicao) => (
-        <article key={nome.svg} id={`nome${posicao + 1}`}>
+        <article key={nome.svg} id={`nome${posicao + 1}`} {...bind}>
           <svg
-            className="NomeSvg"
+            className={classnames("NomeSvg", {
+              Zoomed: isZoomed,
+            })}
             preserveAspectRatio="xMidYMid meet"
             viewBox={nome.viewBox}
             width={nome.width}
