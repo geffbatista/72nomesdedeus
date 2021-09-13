@@ -32,4 +32,8 @@
   @media (min-width: $desktopMinWidth) {
     display: none;
   }
+
+  &.Hidden {
+    opacity: 0;
+  }
 }

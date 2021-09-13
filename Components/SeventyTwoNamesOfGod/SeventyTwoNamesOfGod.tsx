@@ -15,7 +15,11 @@ const SeventyTwoNamesOfGod = ({
   SeventyTwoNames,
   setShowingNavByPosition,
 }: SeventyTwoNamesOfGodProps) => {
-  const [isZoomed, setZoomed] = useState(false);
+  const [showingControls, setShowingControls] = useState(true);
+  const [scale, setScale] = useState({
+    "2x": false,
+    "3x": false,
+  });
 
   const {
     darkModeActive, // boolean - whether the dark mode is active or not
@@ -31,18 +35,38 @@ const SeventyTwoNamesOfGod = ({
     }
   };
 
+  const clickHandler = (ev: SyntheticEvent) => {
+    setShowingControls(!showingControls);
+
+    ev.preventDefault();
+    ev.stopPropagation();
+  };
+
   const doubleClickHandler = (ev: SyntheticEvent) => {
-    if (isZoomed) {
-      setZoomed(false);
+    if (scale["2x"]) {
+      setScale({
+        "2x": false,
+        "3x": true,
+      });
+    } else if (scale["3x"]) {
+      setScale({
+        "2x": false,
+        "3x": false,
+      });
     } else {
-      setZoomed(true);
+      setScale({
+        "2x": true,
+        "3x": false,
+      });
     }
 
     ev.preventDefault();
     ev.stopPropagation();
   };
 
-  const bind = useDoubleTap((ev) => doubleClickHandler(ev));
+  const bind = useDoubleTap((ev) => doubleClickHandler(ev), 200, {
+    onSingleTap: clickHandler,
+  });
 
   return (
     <div className="NamesWrapper">
@@ -50,7 +74,8 @@ const SeventyTwoNamesOfGod = ({
         <article key={nome.svg} id={`nome${posicao + 1}`} {...bind}>
           <svg
             className={classnames("NomeSvg", {
-              Zoomed: isZoomed,
+              Zooming2x: scale["2x"],
+              Zooming3x: scale["3x"],
             })}
             preserveAspectRatio="xMidYMid meet"
             viewBox={nome.viewBox}
@@ -68,7 +93,9 @@ const SeventyTwoNamesOfGod = ({
 
           <button
             type="button"
-            className="PositionChanger"
+            className={classnames("PositionChanger", {
+              Hidden: !showingControls,
+            })}
             onClick={(event) =>
               openNavigationByPosition(
                 posicao + 1,
@@ -82,7 +109,7 @@ const SeventyTwoNamesOfGod = ({
 
           <button
             type="button"
-            className="ThemeChanger"
+            className={classnames("ThemeChanger", { Hidden: !showingControls })}
             onClick={ThemeChangerClickHandler}
           >
             <MdInvertColors className="Icon" />

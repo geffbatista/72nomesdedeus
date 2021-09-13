@@ -10,11 +10,16 @@
   height: auto;
   color: currentColor;
 
-  transition: width 0.15s ease-out;
+  transition: width 0.15s ease-in-out;
 
-  &.Zoomed {
+  &.Zooming2x {
     width: 66%;
-    transition: width 0.35s ease-in;
+    transition: width 0.35s ease-in-out;
+  }
+
+  &.Zooming3x {
+    width: 99%;
+    transition: width 0.35s ease-in-out;
   }
 
   .UseSvg {
