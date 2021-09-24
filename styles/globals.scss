@@ -73,8 +73,52 @@ h1 {
 
 @import "NavigateByPosition.module.scss";
 @import "ThemeChanger.module.scss";
+@import "AwaitChanger.module.scss";
 @import "Means.module.scss";
 @import "NamesWrapper.scss";
 @import "SvgName.module.scss";
 @import "Panel.module.scss";
 @import "Overlay.module.scss";
+
+#MeditationOptions {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+
+  display: flex;
+  flex-flow: column nowrap;
+
+  label {
+    display: block;
+    font-size: 22px;
+  }
+
+  input[type="number"] {
+    display: block;
+    margin: 8px auto 0;
+    padding: 8px 16px;
+
+    width: 100%;
+    height: 44px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+
+    font-size: 22px;
+    text-align: center;
+    color: #fff;
+  }
+
+  button {
+    display: block;
+    margin: auto 0 0 0;
+    padding: 8px 16px;
+
+    width: 100%;
+    height: 44px;
+    box-sizing: border-box;
+
+    font-size: 16px;
+    letter-spacing: 0.04em;
+  }
+}

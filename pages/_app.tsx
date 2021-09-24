@@ -1,4 +1,3 @@
-import withDarkMode from "next-dark-mode";
 import { AppProps } from "next/dist/next-server/lib/router/router";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -21,4 +20,4 @@ const App = ({ Component, pageProps }: AppProps) => {
   return <Component {...pageProps} />;
 };
 
-export default withDarkMode(App);
+export default App;

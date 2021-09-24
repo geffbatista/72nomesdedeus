@@ -1,0 +1,18 @@
+.UserInteractions {
+  position: fixed;
+  z-index: 201;
+  right: 16px;
+  top: 32px;
+  transform: translate(-8px, 8px);
+
+  width: auto;
+  height: auto;
+
+  button {
+    margin: 8px 0 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}

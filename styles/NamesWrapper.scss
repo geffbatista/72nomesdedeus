@@ -7,7 +7,7 @@
   align-items: flex-start;
 
   width: 100%;
-  height: 100%;
+  height: auto;
 
   @media (min-width: $desktopMinWidth) {
     align-items: stretch;

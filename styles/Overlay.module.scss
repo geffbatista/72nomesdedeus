@@ -22,7 +22,7 @@
   &.Showing {
     opacity: 1;
     visibility: visible;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(4px);
 
     transition: backdrop-filter 0.35s ease, opacity 0.35s ease,
       visibility 0s ease 0s;

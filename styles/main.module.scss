@@ -65,7 +65,9 @@ main {
     }
 
     .PositionChanger,
-    .ThemeChanger {
+    .ThemeChanger,
+    .AwaitChanger,
+    .FloatingCircle {
       background: #eee;
       color: #333;
     }
@@ -93,7 +95,9 @@ main {
     }
 
     .PositionChanger,
-    .ThemeChanger {
+    .ThemeChanger,
+    .AwaitChanger,
+    .FloatingCircle {
       background: #222;
       color: #fff;
     }

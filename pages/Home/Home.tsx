@@ -1,43 +1,121 @@
-import { delay } from "lodash";
-import { useDarkMode } from "next-dark-mode";
 import Head from "next/head";
-import { LegacyRef, useEffect, useRef, useState } from "react";
+import {
+  LegacyRef,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useTimer } from "react-timer-hook";
 import HeadProperties from "../../Components/Head";
+import MeditationAwaitOptions from "../../Components/MeditationAwaitOptions";
+import { MEDITATION_SECONDS } from "../../Components/MeditationAwaitOptions/MeditationAwaitOptions";
 import NavigationByPosition from "../../Components/NavigationByPosition";
 import SeventyTwoNamesOfGod from "../../Components/SeventyTwoNamesOfGod";
-import { NamesOfGodType } from "../../types";
-import clearUrl from "./helpers/clearUrl";
+import UserInteractions from "../../Components/UserInteractions";
+import callAName from "../../lib/HomeHelpers/callAName";
+import callNextName from "../../lib/HomeHelpers/callNextName";
+import NowPlusSeconds from "../../lib/HomeHelpers/NowPlusSeconds";
+import onScroll from "../../lib/HomeHelpers/onScroll";
+import { HomePageProps } from "../../types/HomeTypes";
 
-interface HomePageProps {
-  SeventyTwoNames: NamesOfGodType;
-}
-
-const Home = ({ SeventyTwoNames }: HomePageProps) => {
+const Home = ({ SeventyTwoNames, isMeditating = false }: HomePageProps) => {
+  const [isDarkModeActive, setDarkMode] = useState(true);
+  const [actualName, setActualName] = useState(0);
+  const [isPlaying, setPlaying] = useState(isMeditating);
   const [showingNavByPosition, setShowingNavByPosition] = useState(false);
+  const [showingMeditationAwaitOptions, setShowMeditationAwaitOptions] =
+    useState(false);
+  const [meditationTime, setMeditationTime] = useState(MEDITATION_SECONDS);
 
+  const mainRef: LegacyRef<HTMLElement> | null = useRef(null);
   const sessionRef: LegacyRef<HTMLElement> | null = useRef(null);
 
+  const [showingControls, setShowingControls] = useState(true);
+
+  const [scale, setScale] = useState({
+    "2x": false,
+    "3x": false,
+  });
+
+  const pageClickHandler = useCallback(
+    (ev: SyntheticEvent) => {
+      setShowingControls(!showingControls);
+
+      ev.preventDefault();
+      ev.stopPropagation();
+    },
+    [showingControls]
+  );
+
+  const pageDoubleClickHandler = useCallback(
+    (ev: SyntheticEvent) => {
+      if (scale["2x"]) {
+        setScale({
+          "2x": false,
+          "3x": true,
+        });
+      } else if (scale["3x"]) {
+        setScale({
+          "2x": false,
+          "3x": false,
+        });
+      } else {
+        setScale({
+          "2x": true,
+          "3x": false,
+        });
+      }
+
+      ev.preventDefault();
+      ev.stopPropagation();
+    },
+    [scale]
+  );
+
+  // TIMER:
+  const { seconds, isRunning, start, pause, resume, restart } = useTimer({
+    expiryTimestamp: NowPlusSeconds(meditationTime),
+    autoStart: isPlaying,
+    onExpire: () => {
+      if (window?.location?.hash) {
+        callNextName(window);
+      } else {
+        callAName(window, 2);
+      }
+    },
+  });
+  // TIMER
+
+  const timer = { seconds, isRunning, restart };
+
   useEffect(() => {
-    const SessionRef = sessionRef?.current;
-    if (window && SessionRef) {
-      const onScrollHandler = (window: any) =>
-        delay(() => clearUrl(window), 1400, "-> URL Cleared!");
+    const actualSessionRef = sessionRef?.current;
 
-      SessionRef.addEventListener("scroll", () => onScrollHandler(window));
+    actualSessionRef?.addEventListener("scroll", () =>
+      onScroll({ isPlaying, timer, navigation: { actualName, setActualName } })
+    );
 
-      // SessionRef.addEventListener("dblclick", doubleClickHandler);
+    return () => {
+      actualSessionRef?.removeEventListener("scroll", () =>
+        onScroll({
+          isPlaying,
+          timer,
+          navigation: { actualName, setActualName },
+        })
+      );
+    };
+  }, [setMeditationTime, actualName, isPlaying, timer]);
 
-      return () => {
-        SessionRef.removeEventListener("scroll", () => onScrollHandler(window));
+  useEffect(() => {
+    const MeditatioTimeFromSessionStorage =
+      window?.sessionStorage?.getItem("meditation-time");
 
-        // SessionRef.removeEventListener("dblclick", doubleClickHandler);
-      };
+    if (MeditatioTimeFromSessionStorage) {
+      setMeditationTime(Number(MeditatioTimeFromSessionStorage));
     }
-  }, [sessionRef]);
-
-  const {
-    darkModeActive, // boolean - whether the dark mode is active or not
-  } = useDarkMode();
+  }, []);
 
   if (!SeventyTwoNames) {
     return null;
@@ -56,15 +134,64 @@ const Home = ({ SeventyTwoNames }: HomePageProps) => {
         <HeadProperties />
       </Head>
 
-      <main className={!darkModeActive ? "LightTheme" : "DarkTheme"}>
-        <section ref={sessionRef}>
+      <main
+        className={!isDarkModeActive ? "LightTheme" : "DarkTheme"}
+        onFocus={() => console.log("MAIN FOCUSED!")}
+        ref={mainRef}
+      >
+        <section
+          ref={sessionRef}
+          onFocus={() => console.log("SECTION FOCUSED!")}
+        >
           <header>
             <h1>72 nomes de deus</h1>
           </header>
 
+          <UserInteractions
+            theme={{
+              isDarkModeActive,
+              setDarkMode,
+            }}
+            navigation={{
+              setShowMeditationAwaitOptions,
+              setShowingNavByPosition,
+              clickHandler: pageClickHandler,
+              doubleClickHandler: pageDoubleClickHandler,
+              scale,
+              showingControls,
+              actualName,
+              setActualName,
+              isPlaying,
+            }}
+            playback={{ playbackTime: seconds, isPlaying }}
+            timer={{ seconds, isRunning, start, pause, resume, restart }}
+          />
+
           <SeventyTwoNamesOfGod
             SeventyTwoNames={SeventyTwoNames}
-            setShowingNavByPosition={setShowingNavByPosition}
+            navigation={{
+              setShowingNavByPosition,
+              setShowMeditationAwaitOptions,
+              doubleClickHandler: pageDoubleClickHandler,
+              clickHandler: pageClickHandler,
+              scale,
+              actualName,
+              setActualName,
+            }}
+            playback={{
+              meditationTime: meditationTime,
+              isPlaying: isPlaying,
+              setPlaying: setPlaying,
+              playbackTime: seconds,
+            }}
+            timer={{
+              seconds,
+              isRunning,
+              start,
+              pause,
+              resume,
+              restart,
+            }}
           />
 
           <footer>Feito para compartilhar</footer>
@@ -74,6 +201,18 @@ const Home = ({ SeventyTwoNames }: HomePageProps) => {
           SeventyTwoNames={SeventyTwoNames}
           setShowPanel={setShowingNavByPosition}
           showing={showingNavByPosition}
+        />
+
+        <MeditationAwaitOptions
+          navigation={{
+            setShow: setShowMeditationAwaitOptions,
+            showing: showingMeditationAwaitOptions,
+          }}
+          playback={{
+            meditationTime: meditationTime,
+            setMeditationTime: setMeditationTime,
+            setPlaying: setPlaying,
+          }}
         />
 
         <aside></aside>
