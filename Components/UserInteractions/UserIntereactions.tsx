@@ -9,7 +9,6 @@ import {
 import { PlaybackProps } from "../../types/playback";
 import { ThemeProps } from "../../types/theme";
 import { TimerProps } from "../../types/timer";
-import { MEDITATION_SECONDS } from "../MeditationAwaitOptions/MeditationAwaitOptions";
 import ProgressiveSvgBorder from "../ProgressiveSvgBorder";
 import openNavigationByPosition from "../SeventyTwoNamesOfGod/openNavigationByPosition";
 import styles from "./UserIntereactions.module.scss";
@@ -57,10 +56,10 @@ const UserInteractions = ({
     [timer, navigation]
   );
 
-  console.log("==============================>>");
-  console.log("-> navigation.isPlaying: ", navigation.isPlaying);
-  console.log("-> timer.isRunning: ", timer.isRunning);
-  console.log("==============================//");
+  // console.log("==============================>>");
+  // console.log("-> navigation.isPlaying: ", navigation.isPlaying);
+  // console.log("-> timer.isRunning: ", timer.isRunning);
+  // console.log("==============================//");
 
   return (
     <nav className={styles.UserInteractions}>
@@ -108,17 +107,19 @@ const UserInteractions = ({
         })}
         onClick={aWaitClickHandler}
       >
-        {showCountDown && !!playback?.playbackTime && (
-          <>
-            {secondsHandler(playback?.playbackTime)}
+        {showCountDown &&
+          !!playback?.meditationTime &&
+          !!playback?.playbackTime && (
+            <>
+              {secondsHandler(playback?.playbackTime)}
 
-            <ProgressiveSvgBorder
-              size={40}
-              strokeWidth={1}
-              progress={(timer.seconds * 100) / MEDITATION_SECONDS}
-            />
-          </>
-        )}
+              <ProgressiveSvgBorder
+                size={40}
+                strokeWidth={1}
+                progress={(timer.seconds * 100) / playback?.meditationTime}
+              />
+            </>
+          )}
 
         {!showCountDown && (
           <MdAccessAlarm width={20} height={20} className="Icon" />

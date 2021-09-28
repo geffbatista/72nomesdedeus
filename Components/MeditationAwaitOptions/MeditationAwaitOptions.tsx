@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { PlaybackProps } from "../../types/playback";
 import { TimerProps } from "../../types/timer";
 import handleButtonClick from "./helpers/handleButtonClick";
@@ -24,6 +24,10 @@ const MeditationAwaitOptions = ({
   playback,
   timer,
 }: MeditationAwaitOptionsProps) => {
+  const [timeField, setTimeField] = useState<number | undefined>(
+    playback?.meditationTime
+  );
+
   const panelClassNames = classnames("Panel ThirdSize FromBottom", {
     Showing: navigation?.showing,
   });
@@ -54,22 +58,14 @@ const MeditationAwaitOptions = ({
               id="MeditationTimeField"
               min={3}
               max={9999}
-              value={playback?.meditationTime}
+              value={timeField}
               onChange={(ev) => {
-                console.log(
-                  "-> ev?.currentTarget?.value: ",
-                  ev?.currentTarget?.value
-                );
+                // console.log(
+                //   "-> ev?.currentTarget?.value: ",
+                //   ev?.currentTarget?.value
+                // );
 
-                if (ev?.currentTarget?.value) {
-                  window?.sessionStorage.setItem(
-                    "meditation-time",
-                    ev?.currentTarget?.value
-                  );
-                }
-
-                playback?.setMeditationTime &&
-                  playback?.setMeditationTime(Number(ev?.currentTarget?.value));
+                setTimeField(Number(ev?.currentTarget?.value));
               }}
             />
           </label>
@@ -81,7 +77,7 @@ const MeditationAwaitOptions = ({
       <button
         className={overlayClassNames}
         title="Fechar"
-        onClick={handleCloseClick}
+        onClick={(ev) => handleCloseClick(ev, navigation)}
       />
     </>
   );

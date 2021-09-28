@@ -1,12 +1,5 @@
 import Head from "next/head";
-import {
-  LegacyRef,
-  SyntheticEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { LegacyRef, useCallback, useEffect, useRef, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import HeadProperties from "../../Components/Head";
 import MeditationAwaitOptions from "../../Components/MeditationAwaitOptions";
@@ -16,6 +9,8 @@ import SeventyTwoNamesOfGod from "../../Components/SeventyTwoNamesOfGod";
 import UserInteractions from "../../Components/UserInteractions";
 import callAName from "../../lib/HomeHelpers/callAName";
 import callNextName from "../../lib/HomeHelpers/callNextName";
+import clickHandler from "../../lib/HomeHelpers/clickHandler";
+import doubleClickHandler from "../../lib/HomeHelpers/doubleClickHandler";
 import NowPlusSeconds from "../../lib/HomeHelpers/NowPlusSeconds";
 import onScroll from "../../lib/HomeHelpers/onScroll";
 import { HomePageProps } from "../../types/HomeTypes";
@@ -40,37 +35,12 @@ const Home = ({ SeventyTwoNames, isMeditating = false }: HomePageProps) => {
   });
 
   const pageClickHandler = useCallback(
-    (ev: SyntheticEvent) => {
-      setShowingControls(!showingControls);
-
-      ev.preventDefault();
-      ev.stopPropagation();
-    },
+    (ev) => clickHandler({ ev, setShowingControls, showingControls }),
     [showingControls]
   );
 
   const pageDoubleClickHandler = useCallback(
-    (ev: SyntheticEvent) => {
-      if (scale["2x"]) {
-        setScale({
-          "2x": false,
-          "3x": true,
-        });
-      } else if (scale["3x"]) {
-        setScale({
-          "2x": false,
-          "3x": false,
-        });
-      } else {
-        setScale({
-          "2x": true,
-          "3x": false,
-        });
-      }
-
-      ev.preventDefault();
-      ev.stopPropagation();
-    },
+    (ev) => doubleClickHandler({ ev, scale, setScale }),
     [scale]
   );
 
@@ -88,29 +58,67 @@ const Home = ({ SeventyTwoNames, isMeditating = false }: HomePageProps) => {
   });
   // TIMER
 
-  const timer = { seconds, isRunning, restart };
+  // LAST THEME USED USE_EFFECT:
+  useEffect(() => {
+    const sessionHasDarkTheme = !!Number(
+      window?.sessionStorage.getItem("isDarkModeActive")
+    );
 
+    setDarkMode(sessionHasDarkTheme);
+  }, []);
+
+  // THEME USE_EFFECT:
+  useEffect(() => {
+    if (isDarkModeActive) {
+      window?.sessionStorage.setItem("isDarkModeActive", "1");
+    } else {
+      window?.sessionStorage.setItem("isDarkModeActive", "0");
+    }
+  }, [isDarkModeActive]);
+
+  // SCROLL USE_EFFECT:
   useEffect(() => {
     const actualSessionRef = sessionRef?.current;
+    const timer = { seconds, isRunning, restart };
 
     actualSessionRef?.addEventListener("scroll", () =>
-      onScroll({ isPlaying, timer, navigation: { actualName, setActualName } })
+      onScroll({
+        playback: { meditationTime },
+        isPlaying,
+        timer,
+        navigation: { actualName, setActualName },
+      })
     );
 
     return () => {
       actualSessionRef?.removeEventListener("scroll", () =>
         onScroll({
+          playback: { meditationTime },
           isPlaying,
           timer,
           navigation: { actualName, setActualName },
         })
       );
     };
-  }, [setMeditationTime, actualName, isPlaying, timer]);
+  }, [
+    setMeditationTime,
+    actualName,
+    isPlaying,
+    seconds,
+    isRunning,
+    restart,
+    meditationTime,
+  ]);
 
+  // MEDITATION USE_EFFECT:
   useEffect(() => {
     const MeditatioTimeFromSessionStorage =
-      window?.sessionStorage?.getItem("meditation-time");
+      window?.sessionStorage?.getItem("meditationTime");
+
+    // console.log(
+    //   "x-x-x-x MeditatioTimeFromSessionStorage: ",
+    //   MeditatioTimeFromSessionStorage
+    // );
 
     if (MeditatioTimeFromSessionStorage) {
       setMeditationTime(Number(MeditatioTimeFromSessionStorage));
@@ -136,13 +144,9 @@ const Home = ({ SeventyTwoNames, isMeditating = false }: HomePageProps) => {
 
       <main
         className={!isDarkModeActive ? "LightTheme" : "DarkTheme"}
-        onFocus={() => console.log("MAIN FOCUSED!")}
         ref={mainRef}
       >
-        <section
-          ref={sessionRef}
-          onFocus={() => console.log("SECTION FOCUSED!")}
-        >
+        <section ref={sessionRef}>
           <header>
             <h1>72 nomes de deus</h1>
           </header>
@@ -163,7 +167,7 @@ const Home = ({ SeventyTwoNames, isMeditating = false }: HomePageProps) => {
               setActualName,
               isPlaying,
             }}
-            playback={{ playbackTime: seconds, isPlaying }}
+            playback={{ meditationTime, playbackTime: seconds, isPlaying }}
             timer={{ seconds, isRunning, start, pause, resume, restart }}
           />
 

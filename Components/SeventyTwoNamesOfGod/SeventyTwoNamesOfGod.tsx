@@ -30,17 +30,9 @@ const SeventyTwoNamesOfGod = ({
   });
 
   return (
-    <div
-      className={namesWrapperClassNames}
-      onFocus={() => console.log("NAMESWRAPPER FOCUSED!")}
-    >
+    <div className={namesWrapperClassNames}>
       {SeventyTwoNames?.map((nome, posicao) => (
-        <article
-          key={nome.svg}
-          id={`nome${posicao + 1}`}
-          {...bind}
-          onFocus={() => console.log("ARTICLE FOCUSED!")}
-        >
+        <article key={nome.svg} id={`nome${posicao + 1}`} {...bind}>
           <svg
             className={svgNameClassNames}
             preserveAspectRatio="xMidYMid meet"
